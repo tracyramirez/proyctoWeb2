@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\clientes;
 
-class clientesController extends Controller
+class clientesController extends Controller {
 
     /**
      * Display a listing of the resource.
@@ -14,7 +14,6 @@ class clientesController extends Controller
      */
     public function index()
     {
-        //
         $clientes=clientes::orderBy('id','DESC')->paginate(3);
         return view('clientes.index',compact('clientes')); 
     }
@@ -38,15 +37,9 @@ class clientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-         //
-        $this->validate($request,[ 'nombre'=>'required', 'apellido'=>'required', 'telefono'=>'required', 'correo'=>'required', 'direccion'=>'required', 'precio'=>'required'];
-        Libro::create($request->all());
+        $this->validate($request,[ 'nombre'=>'required', 'apellido'=>'required', 'telefono'=>'required', 'correo'=>'required', 'direccion'=>'required', 'precio'=>'required']);
+        clientes::create($request->all());
         return redirect()->route('clientes.index')->with('success','Registro creado satisfactoriamente');
-
-
-       
-    }
     }
 
     /**
@@ -57,7 +50,8 @@ class clientesController extends Controller
      */
     public function show($id)
     {
-        //
+          $clientes=clientes::find($id);
+        return  view('clientes.show',compact('clientes'));
     }
 
     /**
@@ -69,6 +63,8 @@ class clientesController extends Controller
     public function edit($id)
     {
         //
+         $clientes=clientes::find($id);
+        return view('clientes.edit',compact('clientes'));
     }
 
     /**
@@ -78,8 +74,10 @@ class clientesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
+         $this->validate($request,[ 'nombre'=>'required', 'apellido'=>'required', 'telefono'=>'required', 'correo'=>'required', 'direccion'=>'required', 'precio'=>'required']);
+        clientes::find($id)->update($request->all());
+        return redirect()->route('clientes.index')->with('success','Registro actualizado satisfactoriamente');
         //
     }
 
@@ -91,6 +89,8 @@ class clientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+         clientes::find($id)->delete();
+        return redirect()->route('clientes.index')->with('success','Registro eliminado satisfactoriamente');
+    
     }
 }
