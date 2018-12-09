@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Usuarios extends Migration
+class CreateCategorias extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class Usuarios extends Migration
      */
     public function up()
     {
-        //
-         Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
+        });
     }
 
     /**
@@ -31,7 +26,6 @@ class Usuarios extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('categorias');
     }
 }
